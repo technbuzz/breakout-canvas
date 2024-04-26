@@ -19,15 +19,29 @@ export class Ball extends Point {
       this.velocity.x = -this.velocity.x;
     }
 
-    if(this.y < this.radius || this.y > globalThis.game.height - this.radius) {
+    if(this.y < this.radius) {
       this.velocity.y = -this.velocity.y;
+    } else if (this.y > globalThis.game.height - this.radius) {
+      if(this.bounceOffPaddle(globalThis.game.player)) {
+        this.velocity.y = -this.velocity.y
+      } else {
+        console.log("EVENT DISPATCHED !!! END GAME")
+        document.dispatchEvent(new CustomEvent("ENDGAME"))
+      }
+      
     }
+  }
+
+  bounceOffPaddle(paddle) {
+    return (this.x > paddle.x && this.x < paddle.x + paddle.width) 
   }
 
   draw() {
     this.drawBall()
 
     this.bounceOffWalls()
+    this.bounceOffPaddle(globalThis.game.player)
+
 
     this.x += this.velocity.x;
     this.y += this.velocity.y;

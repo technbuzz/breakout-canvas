@@ -15,6 +15,16 @@ export class Game {
     this.ball = new Ball(this.width / 2, this.height - 30);
     this.player = new Player()
 
+    this.rfa = undefined
+
+    document.addEventListener("ENDGAME", (event) => {
+      console.log("ENDGAME")
+      // clear requestAnimationFrame
+      cancelAnimationFrame(this.rfa)
+    })
+
+    // keep this at the bottom because it calls update
+    // which in turn calls draw which is infinitely called
     this.update()
   }
 
@@ -25,15 +35,17 @@ export class Game {
   }
 
   update() {
+    this.rfa = requestAnimationFrame(this.update.bind(this));
     this.draw();
-
-    requestAnimationFrame(this.update.bind(this));
   }
 }
 
 let canvas = document.querySelector("canvas");
 let game = new Game(canvas)
 
+function animate() {
+
+}
 
 
 
