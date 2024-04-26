@@ -1,4 +1,5 @@
 import { Ball } from "./Ball.js";
+import { Bricks } from "./Bricks.js";
 import { Player } from "./Player.js";
 
 export class Game {
@@ -12,6 +13,7 @@ export class Game {
 
     globalThis.game = this;
 
+    this.bricks = new Bricks();
     this.ball = new Ball(this.width / 2, this.height - 30);
     this.player = new Player()
 
@@ -30,6 +32,7 @@ export class Game {
 
   draw() {
     this.c.clearRect(0, 0, this.width, this.height);
+    this.bricks.draw();
     this.ball.draw();
     this.player.draw();
   }
