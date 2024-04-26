@@ -14,7 +14,7 @@ export class Game {
     globalThis.game = this;
 
     this.bricks = new Bricks();
-    this.ball = new Ball(this.width / 2, this.height - 30);
+    this.ball = new Ball(this.width / 2, this.height - 30, 10);
     this.player = new Player()
 
     this.rfa = undefined

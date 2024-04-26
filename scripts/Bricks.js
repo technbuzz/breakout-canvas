@@ -1,4 +1,4 @@
-import { Point } from "./utils.js";
+import { Point, collision } from "./utils.js";
 export class Bricks {
 
 
@@ -31,7 +31,7 @@ export class Bricks {
       for(let r=0; r<this.rows; r++) {
         const brickX = c * (this.padding + this.width) + this.offsetLeft;
         const brickY = r * (this.padding + this.height) + this.offsetTop;
-        result[c][r] = new Point(brickX, brickY) 
+        result[c][r] = Object.assign({}, new Point(brickX, brickY), {width: this.width, height: this.height, status: true} )
       }
     }
     return result
@@ -40,12 +40,30 @@ export class Bricks {
   drawBricks() {
     this.bricks.forEach((column) => {
       column.forEach((brick) => {
-        this.drawBrick(globalThis.game.c, brick.x, brick.y)
+        if(brick.status) {
+          this.drawBrick(globalThis.game.c, brick.x, brick.y)
+        }
       })
     })
   }
 
+  brickCollision() {
+    for(let c =0; c<this.columns  ; c++) {
+      for(let r=0; r<this.rows; r++) {
+        const brick = this.bricks[c][r]
+        if(!brick.status) continue
+        if(collision(globalThis.game.ball, brick)) {
+          brick.status = false
+          globalThis.game.ball.velocity.y = -globalThis.game.ball.velocity.y
+          return
+        }
+      }
+    }
+  }
+
   draw() {
+    this.brickCollision()
     this.drawBricks()
+
   }
 }
