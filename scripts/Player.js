@@ -16,6 +16,7 @@ export class Player extends Point{
     this.rightPressed = false;
     this.keys = new Keys();
     document.addEventListener("left", (event) => {
+      console.log(event)
       this.leftPressed = event.detail.leftPressed;
     })
 
@@ -25,7 +26,7 @@ export class Player extends Point{
     })
 
     document.addEventListener("paddlemousemove", (event) => {
-      console.log('paddlemousemove received', event.detail)
+      console.log(event)
       this.x = event.detail.x - this.width / 2
       })
 

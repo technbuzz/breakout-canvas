@@ -25,6 +25,8 @@ export class Game {
       console.log("ENDGAME")
       // clear requestAnimationFrame
       cancelAnimationFrame(this.rfa)
+      
+      this.destroy();
     })
 
     document.addEventListener("UPDATESCORE", event => {
@@ -45,6 +47,10 @@ export class Game {
     this.ball.draw();
     this.player.draw();
     this.score.draw();
+  }
+
+  destroy() {
+    this.player.keys.destroy()
   }
 
   update() {

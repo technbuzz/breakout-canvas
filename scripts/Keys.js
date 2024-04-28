@@ -60,4 +60,10 @@ export class Keys {
       }))
     }
   }
+
+  destroy() {
+    removeEventListener("keydown", this.handleKeydown);
+    removeEventListener("keyup", this.handleKeyup);
+    removeEventListener("mousemove", this.handleMouseMove)
+  }
 }
