@@ -3,7 +3,13 @@ export class Ball extends Point {
   constructor(x, y, radius=5) {
     super(x, y);
     this.radius = radius;
-    this.velocity = new Point(2, -1)
+    this.velocity = new Point(2, -2)
+  }
+
+  reset(x, y) {
+    this.x = x
+    this.y = y
+    this.velocity = new Point(2, -2)
   }
 
   drawBall() {

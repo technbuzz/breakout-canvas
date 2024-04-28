@@ -2,6 +2,7 @@ import { Ball } from "./Ball.js";
 import { Bricks } from "./Bricks.js";
 import { Player } from "./Player.js";
 import { Score } from "./Score.js";
+import { UI } from "./utils.js";
 
 export class Game {
   constructor(canvas) {
@@ -14,19 +15,27 @@ export class Game {
 
     globalThis.game = this;
 
-    this.score = new Score(10, 10)
+    this.score = new Score(10, 12)
     this.bricks = new Bricks();
     this.ball = new Ball(this.width / 2, this.height - 30, 10);
     this.player = new Player()
+    this.lives = new UI(this.width - 80, 10, "Lives", 3)
 
     this.rfa = undefined
 
     document.addEventListener("ENDGAME", (event) => {
-      console.log("ENDGAME")
+      if(!this.lives.value) {
+        console.log("ENDGAME")
+        cancelAnimationFrame(this.rfa)
+        this.destroy();
+        return
+      }
+
+      this.lives.value -= 1
+      this.ball.reset(this.canvas.width / 2, this.height - 30)
+
       // clear requestAnimationFrame
-      cancelAnimationFrame(this.rfa)
       
-      this.destroy();
     })
 
     document.addEventListener("UPDATESCORE", event => {
@@ -46,7 +55,8 @@ export class Game {
     this.bricks.draw();
     this.ball.draw();
     this.player.draw();
-    this.score.draw();
+    this.score.draw(this.c);
+    this.lives.draw(this.c)
   }
 
   destroy() {
@@ -67,8 +77,3 @@ function animate() {
 }
 
 
-
-
-
-
-console.log(game)

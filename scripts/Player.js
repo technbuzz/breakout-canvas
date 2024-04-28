@@ -3,7 +3,7 @@ import { Keys } from "./Keys.js";
 
 export class Player extends Point{
 
-  constructor(x, y) {
+  constructor(x, y, lives = 3) {
     super(0, 0);
 
     this.height = 10;
@@ -11,6 +11,7 @@ export class Player extends Point{
 
     this.x = globalThis.game.width / 2 - this.width;
     this.y = globalThis.game.height - this.height;
+    this.lives = lives;
 
     this.leftPressed = false;
     this.rightPressed = false;
