@@ -1,6 +1,7 @@
 import { Ball } from "./Ball.js";
 import { Bricks } from "./Bricks.js";
 import { Player } from "./Player.js";
+import { Score } from "./Score.js";
 
 export class Game {
   constructor(canvas) {
@@ -13,6 +14,7 @@ export class Game {
 
     globalThis.game = this;
 
+    this.score = new Score(10, 10)
     this.bricks = new Bricks();
     this.ball = new Ball(this.width / 2, this.height - 30, 10);
     this.player = new Player()
@@ -25,6 +27,11 @@ export class Game {
       cancelAnimationFrame(this.rfa)
     })
 
+    document.addEventListener("UPDATESCORE", event => {
+      console.log('UPDATESCORE received') 
+      this.score.value += 1
+    })
+
     // keep this at the bottom because it calls update
     // which in turn calls draw which is infinitely called
     this.update()
@@ -35,6 +42,7 @@ export class Game {
     this.bricks.draw();
     this.ball.draw();
     this.player.draw();
+    this.score.draw();
   }
 
   update() {

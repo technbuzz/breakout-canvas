@@ -54,7 +54,13 @@ export class Bricks {
         if(!brick.status) continue
         if(collision(globalThis.game.ball, brick)) {
           brick.status = false
+          console.log('hit', 'Score update event dispatched')
+          document.dispatchEvent(new CustomEvent("UPDATESCORE"))
           globalThis.game.ball.velocity.y = -globalThis.game.ball.velocity.y
+          if(score == this.rows * this.columns) {
+            console.log("YOU WON!!!!!!")
+            document.dispatchEvent(new CustomEvent("ENDGAME"))
+          }
           return
         }
       }
