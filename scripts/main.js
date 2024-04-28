@@ -32,6 +32,8 @@ export class Game {
       this.score.value += 1
     })
 
+
+
     // keep this at the bottom because it calls update
     // which in turn calls draw which is infinitely called
     this.update()

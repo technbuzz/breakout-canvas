@@ -47,17 +47,17 @@ export class Bricks {
     })
   }
 
-  brickCollision() {
+  brickCollision(game) {
     for(let c =0; c<this.columns  ; c++) {
       for(let r=0; r<this.rows; r++) {
         const brick = this.bricks[c][r]
         if(!brick.status) continue
-        if(collision(globalThis.game.ball, brick)) {
+        if(collision(game.ball, brick)) {
           brick.status = false
           console.log('hit', 'Score update event dispatched')
           document.dispatchEvent(new CustomEvent("UPDATESCORE"))
-          globalThis.game.ball.velocity.y = -globalThis.game.ball.velocity.y
-          if(score == this.rows * this.columns) {
+          game.ball.velocity.y = -game.ball.velocity.y
+          if(game.score.value == this.rows * this.columns) {
             console.log("YOU WON!!!!!!")
             document.dispatchEvent(new CustomEvent("ENDGAME"))
           }
@@ -68,7 +68,7 @@ export class Bricks {
   }
 
   draw() {
-    this.brickCollision()
+    this.brickCollision(globalThis.game)
     this.drawBricks()
 
   }

@@ -23,6 +23,12 @@ export class Player extends Point{
       console.log(event)
       this.rightPressed = event.detail.rightPressed;
     })
+
+    document.addEventListener("paddlemousemove", (event) => {
+      console.log('paddlemousemove received', event.detail)
+      this.x = event.detail.x - this.width / 2
+      })
+
   }
 
 

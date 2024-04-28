@@ -2,6 +2,7 @@ export class Keys {
   constructor() {
     addEventListener("keydown", this.handleKeydown);
     addEventListener("keyup", this.handleKeyup);
+    addEventListener("mousemove", this.handleMouseMove)
 
     this.leftKey = new CustomEvent("leftPressed", {
       details: {
@@ -45,6 +46,18 @@ export class Keys {
           rightPressed: false
         }
       }));
+    }
+  }
+
+  /** @param {MouseEvent} event */
+  handleMouseMove(event) {
+    const relativeX = event.clientX - globalThis.game.canvas.offsetLeft
+    if(relativeX > 0 && relativeX < globalThis.game.width) {
+      document.dispatchEvent(new CustomEvent("paddlemousemove", {
+        detail: {
+          x: relativeX
+        }
+      }))
     }
   }
 }
